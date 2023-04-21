@@ -24,6 +24,8 @@ COPY --from=builder /etc/ssl/private/ssl-cert-snakeoil.key /etc/ssl/private/ssl-
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 
 RUN a2enmod rewrite ssl headers \
+    && ln -s /var/www/html/simplycode/js/ /var/www/html/js \
+    && ln -s /var/www/www/api/data/generated.html /var/www/html/index.html \
     && sed --in-place --expression 's%src="/js/%src="js/%g' /var/www/html/simplycode/index.html
 
 CMD ["/bin/bash", "-c", "chown -R www-data:www-data /var/www/www/api/data && apache2-foreground"]
