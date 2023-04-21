@@ -10,7 +10,9 @@ RUN apt-get update && apt-get install -y git ssl-cert \
 FROM php:7.4-apache
 
 COPY --from=builder /app/simply-code/lib /var/www/lib
+COPY --from=builder /app/simply-code/www/api/.htaccess /var/www/html/api/.htaccess
 COPY --from=builder /app/simply-code/www/api/data/generated.html /var/www/html/simplycode/index.html
+COPY --from=builder /app/simply-code/www/api/index.php /var/www/html/api/index.php
 COPY --from=builder /app/simply-code/www/css /var/www/html/simplycode/css
 COPY --from=builder /app/simply-code/www/js /var/www/html/simplycode/js
 
