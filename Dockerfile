@@ -25,3 +25,5 @@ COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 
 RUN a2enmod rewrite ssl headers \
     && sed --in-place --expression 's%src="/js/%src="js/%g' /var/www/html/simplycode/index.html
+
+CMD ["/bin/bash", "-c", "chown -R www-data:www-data /var/www/www/api/data && apache2-foreground"]
