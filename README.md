@@ -20,7 +20,7 @@ docker pull ghcr.io/simplyedit/simplycode-docker:main
 Versioned images are also available:
 
 ```sh
-docker pull ghcr.io/simplyedit/simplycode-docker:v0.2.0
+docker pull ghcr.io/simplyedit/simplycode-docker:v0.3.0
 ```
 
 ## Usage
