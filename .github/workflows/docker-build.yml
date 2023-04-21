@@ -4,9 +4,9 @@ name: Build Docker Image
 on:
   push:
     branches: [ main ]
+    tags:
   pull_request:
     branches: [ main ]
-  tags:
   # Allow manually triggering the workflow.
   workflow_dispatch:
 
