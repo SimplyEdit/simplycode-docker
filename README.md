@@ -38,10 +38,6 @@ docker run \
 
 This will mount the current working directory into the docker image at the right place, and start the SimplyCode server.
 
-The current setup will cause all files to be owned by `www-data`.
-
-This [is considered a bug][1] which should be fixed in future releases.
-
 [1]: https://github.com/SimplyEdit/simplycode-docker/issues/2
 
 ## Contribute
