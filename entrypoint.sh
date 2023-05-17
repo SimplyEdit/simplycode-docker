@@ -21,6 +21,21 @@ checkEnv() {
     return "${fail}"
 }
 
+checkPaths() {
+    local fail=0
+
+    if [ ! -d '/var/www/www/api/data' ]; then
+        # shellcheck disable=SC2016
+        printf '%sPlease call this docker image with --volume "${PWD}:/var/www/www/api/data"%s\n' \
+            "$(tput setaf 7)$(tput setab 1)" \
+            "$(tput sgr 0)" \
+            >&2
+        fail=1
+    fi
+
+    return "${fail}"
+}
+
 defaultCommand() {
     groupmod --gid "${USER_GID}" 'www-data'
     usermod --gid "${USER_GID}" --uid "${USER_ID}" 'www-data'
@@ -43,6 +58,7 @@ runChecks() {
     local pass=true
 
     checkEnv || pass=false
+    checkPaths || pass=false
 
     if [ "${pass}" = false ]; then
         exit 1
