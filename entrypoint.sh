@@ -62,6 +62,10 @@ runChecks() {
 
     if [ "${pass}" = false ]; then
         exit 1
+    else
+        # Output "ok" message white on green
+        echo -n "$(tput setaf 7)$(tput setab 2)All checks passed$(tput sgr 0)"
+        echo " - Running on https://$(tail -n1 /etc/hosts | cut -f1)"
     fi
 }
 
