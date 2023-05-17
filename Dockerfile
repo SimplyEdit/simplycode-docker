@@ -22,12 +22,13 @@ COPY --from=builder /etc/ssl/certs/ssl-cert-snakeoil.pem /etc/ssl/certs/ssl-cert
 COPY --from=builder /etc/ssl/private/ssl-cert-snakeoil.key /etc/ssl/private/ssl-cert-snakeoil.key
 
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
+COPY entrypoint.sh /entrypoint.sh
 
 RUN a2enmod --quiet rewrite ssl headers \
+    && chmod +x /entrypoint.sh \
     && ln -s /var/www/html/simplycode/js/ /var/www/html/js \
     && ln -s /var/www/www/api/data/generated.html /var/www/html/index.html \
-    && mkdir -p /var/www/www/api/data/ && chown -R www-data:www-data /var/www/www/api/data/ \
     && mkdir /var/www/html/data && echo '{}' > /var/www/html/data/data.json \
     && sed --in-place --expression 's%src="/js/%src="js/%g' /var/www/html/simplycode/index.html
 
-CMD ["/bin/bash", "-c", "chown -R www-data:www-data /var/www/www/api/data && apache2-foreground"]
+ENTRYPOINT ["/entrypoint.sh"]
