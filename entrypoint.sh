@@ -56,9 +56,10 @@ defaultCommand() {
 }
 
 entrypoint() {
-    local -r A="${1-}"
+    local -r subject="${1-}"
 
-    if [ -n "${A}" ] && [ -n "$(command -v "${A}" 2> /dev/null)" ]; then
+    # If the first argument is a command that exists, run it
+    if [ -n "${subject}" ] && [ -n "$(command -v "${subject}" 2> /dev/null)" ]; then
         exec "${@}"
     else
         runChecks
