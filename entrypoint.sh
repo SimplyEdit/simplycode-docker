@@ -9,7 +9,7 @@ set -o errexit -o errtrace -o nounset -o pipefail
 checkEnv() {
     local fail=0
 
-    if [ "${USER_ID:-}" = '' ] || [ "${USER_GID:-}" = '' ]; then
+    if [ "${USER_ID-}" = '' ] || [ "${USER_GID-}" = '' ]; then
         # shellcheck disable=SC2016
         printf '%sPlease call this docker image with --env "USER_ID=$(id -u)" --env "USER_GID=$(id -g)"%s\n' \
             "$(tput setaf 7)$(tput setab 1)" \
