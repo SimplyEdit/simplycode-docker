@@ -40,7 +40,6 @@ jobs:
       - name: Build Docker Image
         run: |
           docker build \
-            --build-arg GITLAB_TOKEN='${{ secrets.GITLAB_TOKEN }}' \
             --tag "ghcr.io/simplyedit/simplycode-docker:${{ env.TAG }}" \
           .
           docker push "ghcr.io/simplyedit/simplycode-docker:${{ env.TAG }}"

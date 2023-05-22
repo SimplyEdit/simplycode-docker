@@ -29,6 +29,8 @@ For most use cases, the following command should be enough:
 
 ```sh
 docker run \
+    --env "USER_GID=$(id -g)" \
+    --env "USER_ID=$(id -u)" \
     --interactive \
     --rm \
     --tty \
@@ -38,19 +40,19 @@ docker run \
 
 This will mount the current working directory into the docker image at the right place, and start the SimplyCode server.
 
-The current setup will cause all files to be owned by `www-data`.
-
-This [is considered a bug][1] which should be fixed in future releases.
-
-[1]: https://github.com/SimplyEdit/simplycode-docker/issues/2
-
 ## Contribute
 
 Feedback and contributions are welcome. Please open an issue or pull request.
 
 ### Development
 
-SimplyCode uses [SimplyEdit Backend](https://github.com/SimplyEdit/simply-edit-backend) as storage engine.
+This repository should not have any significant code.
+
+Currently, the only code is:
+
+- `Dockerfile` that builds a docker image with SimplyCode installed
+- `entrypoint.sh` that is used to run SimplyCode in the Docker image (and do some checks)
+- `.github/workflows/publish.yml` GitHub workflow that builds and publishes the docker image 
 
 ## License
 
