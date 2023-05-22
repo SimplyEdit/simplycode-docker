@@ -31,6 +31,18 @@ checkPaths() {
             "$(tput sgr 0)" \
             >&2
         fail=1
+    elif [ ! -f '/var/www/www/api/data/generated.html' ]; then
+        # shellcheck disable=SC2016
+        printf '%sMissing /var/www/www/api/data/generated.html file.%s\n%sPlease check that the mounted volume contains a "generated.html" file.%s\n' \
+            "$(tput setaf 7)$(tput setab 1)" \
+            "$(tput sgr 0)" \
+            "$(tput setaf 7)" \
+            "$(tput sgr 0)" \
+            >&2
+        echo "Current contents of volume:"
+        find /var/www/www/api/data -maxdepth 1 -type d | indent
+        find /var/www/www/api/data -maxdepth 1 -type f | indent
+        fail=1
     fi
 
     return "${fail}"
@@ -52,6 +64,10 @@ entrypoint() {
         runChecks
         defaultCommand "${@}"
     fi
+}
+
+indent() {
+    sed 's/^/\t/'
 }
 
 runChecks() {
