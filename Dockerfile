@@ -13,8 +13,6 @@ COPY --from=builder /app/simplycode/www/api/index.php /var/www/html/api/index.ph
 COPY --from=builder /app/simplycode/www/css /var/www/html/simplycode/css
 COPY --from=builder /app/simplycode/www/js /var/www/html/simplycode/js
 
-COPY --from=builder /app/simply-edit-backend /var/www/html/simplycode/simplyedit
-
 COPY --from=builder /etc/ssl/certs/ssl-cert-snakeoil.pem /etc/ssl/certs/ssl-cert-snakeoil.pem
 COPY --from=builder /etc/ssl/private/ssl-cert-snakeoil.key /etc/ssl/private/ssl-cert-snakeoil.key
 
