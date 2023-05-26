@@ -20,6 +20,7 @@ COPY --from=builder /etc/ssl/private/ssl-cert-snakeoil.key /etc/ssl/private/ssl-
 
 COPY 000-default.conf /etc/apache2/sites-available/000-default.conf
 COPY entrypoint.sh /entrypoint.sh
+COPY 403.php /var/www/html/403.php
 
 RUN a2enmod --quiet rewrite ssl headers \
     && chmod +x /entrypoint.sh \

@@ -23,6 +23,7 @@ checkEnv() {
 
 checkPaths() {
     local fail=0
+    local text
 
     if [ ! -d '/var/www/www/api/data' ]; then
         # shellcheck disable=SC2016
@@ -32,17 +33,17 @@ checkPaths() {
             >&2
         fail=1
     elif [ ! -f '/var/www/www/api/data/generated.html' ]; then
-        # shellcheck disable=SC2016
-        printf '%sMissing /var/www/www/api/data/generated.html file.%s\n%sPlease check that the mounted volume contains a "generated.html" file.%s\n' \
-            "$(tput setaf 7)$(tput setab 1)" \
-            "$(tput sgr 0)" \
-            "$(tput setaf 7)" \
+        text=$(cat <<EOF
+%sThere does not seem to be a "generated.html" file.%s
+If you have not yet saved your application, this is expected.
+Otherwise, this might indicate a problem with the volume mount.
+EOF
+)
+        # shellcheck disable=SC2059
+        printf "${text}\n" \
+            "$(tput setaf 3)" \
             "$(tput sgr 0)" \
             >&2
-        echo "Current contents of volume:"
-        find /var/www/www/api/data -maxdepth 1 -type d | indent
-        find /var/www/www/api/data -maxdepth 1 -type f | indent
-        fail=1
     fi
 
     return "${fail}"
@@ -67,12 +68,9 @@ entrypoint() {
     fi
 }
 
-indent() {
-    sed 's/^/\t/'
-}
-
 runChecks() {
     local pass=true
+    local url
 
     checkEnv || pass=false
     checkPaths || pass=false
@@ -80,9 +78,20 @@ runChecks() {
     if [ "${pass}" = false ]; then
         exit 1
     else
-        # Output "ok" message white on green
-        echo -n "$(tput setaf 7)$(tput setab 2)All checks passed$(tput sgr 0)"
-        echo " - Running on https://$(tail -n1 /etc/hosts | cut -f1)"
+        printf '%sAll checks passed%s\n\n' \
+            "$(tput setaf 7)$(tput setab 2)" \
+            "$(tput sgr 0)"
+
+        echo "Contents of volume /var/www/www/api/data:"
+        find /var/www/www/api/data -maxdepth 1 -type d -exec echo -e "\t{}/" \;
+        find /var/www/www/api/data -maxdepth 1 -type f -exec echo -e "\t{}" \;
+
+        url="https://$(tail -n1 /etc/hosts | cut -f1)"
+        if [ ! -f '/var/www/www/api/data/generated.html' ]; then
+            url="${url}/simplycode/"
+        fi
+
+        echo -e "Running on $(tput setaf 7)${url}$(tput sgr 0)\n"
     fi
 }
 
