@@ -50,8 +50,8 @@ EOF
 }
 
 defaultCommand() {
-    groupmod --gid "${USER_GID}" 'www-data'
-    usermod --gid "${USER_GID}" --uid "${USER_ID}" 'www-data'
+    groupmod --gid "${USER_GID}" 'www-data' || true
+    usermod --gid "${USER_GID}" --uid "${USER_ID}" 'www-data' || true
 
     apache2-foreground
 }
