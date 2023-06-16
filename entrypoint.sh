@@ -68,6 +68,31 @@ entrypoint() {
     fi
 }
 
+guessUrl(){
+    local hasHost isSetFromFile url
+
+    hasHost="$(getent 'hosts' 'host.docker.internal' | awk '{ print $1 }')"
+    isSetFromFile="$(grep 'docker.internal'  /etc/hosts | awk '{ print $1 }')"
+
+    # host.docker.internal is not available on Linux, it is set in /etc/hosts
+    # If `host.docker.internal` is available and not set in /etc/hosts,
+    # we are in Docker Desktop for Mac or Windows.
+    # If it is not available, or is available but set in /etc/hosts, we are on
+    # Linux.
+
+    if [ "${hasHost}" == 'host.docker.internal' ] && [ "${isSetFromFile}" != 'host.docker.internal' ]; then
+        # we are on Docker Desktop for Mac or Windows
+        url='Docker Desktop'
+    else
+        # we are on Linux
+        url="https://$(tail -n1 /etc/hosts | cut -f1)"
+        if [ ! -f '/var/www/www/api/data/generated.html' ]; then
+            url="${url}/simplycode/"
+        fi
+    fi
+
+    echo "${url}"
+}
 runChecks() {
     local pass=true
     local url
@@ -86,10 +111,8 @@ runChecks() {
         find /var/www/www/api/data -maxdepth 1 -type d -exec echo -e "\t{}/" \;
         find /var/www/www/api/data -maxdepth 1 -type f -exec echo -e "\t{}" \;
 
-        url="https://$(tail -n1 /etc/hosts | cut -f1)"
-        if [ ! -f '/var/www/www/api/data/generated.html' ]; then
-            url="${url}/simplycode/"
-        fi
+        url="$(guessUrl)"
+        readonly url
 
         echo -e "Running on $(tput setaf 7)${url}$(tput sgr 0)\n"
     fi
