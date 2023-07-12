@@ -1,7 +1,7 @@
 # SimplyCode Docker
 
 [![SimplyEdit][simplyedit-shield]][simplyedit-site]
-[![][project-stage-badge: Experimental]][project-stage-page]
+[![Project stage: Development][project-stage-badge: Development]][project-stage-page]
 [![License][license-shield]][license-link]
 [![standard-readme compliant][standard-readme-shield]][standard-readme-link]
 
@@ -68,7 +68,7 @@ Created by [SimplyEdit](https://simplyedit.io) under an MIT License.
 [license-shield]: https://img.shields.io/github/license/simplyedit/simplycode-docker.svg
 [simplyedit-shield]: https://img.shields.io/badge/Simply-Edit-F26522?labelColor=939598
 [simplyedit-site]: https://simplyedit.io/
-[project-stage-badge: Experimental]: https://img.shields.io/badge/Project%20Stage-Experimental-yellow.svg
+[project-stage-badge: Development]: https://img.shields.io/badge/Project%20Stage-Development-yellowgreen.svg
 [project-stage-page]: https://blog.pother.ca/project-stages/
 [standard-readme-link]: https://github.com/RichardLitt/standard-readme
 [standard-readme-shield]: https://img.shields.io/badge/-Standard%20Readme-brightgreen.svg
