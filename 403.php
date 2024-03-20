@@ -85,6 +85,9 @@ if (
   <p>
     This looks like your first visit.
     <strong>Go to <a href="%s">%s</a> to start building something awesome.</strong>
+    <!-- @TODO: Add a link to a turorial or reference to help the user
+        See: https://github.com/SimplyEdit/simplycode-docker/issues/12
+      -->
   </p>
   <hr>
   %s
