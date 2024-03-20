@@ -84,8 +84,9 @@ if (
   <h1>Welcome to SimplyCode!</h1>
   <p>
     This looks like your first visit.
+    <strong>Go to <a href="https://tutorial.dev.muze.nl/"> https://tutorial.dev.muze.nl/ </a> and read "Your first application: TodoMVC" to learn about simplycode.</strong>
     <strong>Go to <a href="%s">%s</a> to start building something awesome.</strong>
-    <!-- @TODO: Add a link to a turorial or reference to help the user
+    <!-- @TODO: Update the link to the turorial or reference to help the user when available
         See: https://github.com/SimplyEdit/simplycode-docker/issues/12
       -->
   </p>
