@@ -1,7 +1,7 @@
 FROM php:7.4-apache as builder
 
 RUN apt-get update && apt-get install -y git ssl-cert \
-    && git clone 'https://github.com/SimplyEdit/simply-edit-backend.git' /app/simply-edit-backend \
+    && git clone 'https://github.com/SimplyEdit/simplyedit-backend.git' /app/simplyedit-backend \
     && git clone 'https://github.com/SimplyEdit/simplycode.git' /app/simplycode
 
 FROM php:7.4-apache
