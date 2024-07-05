@@ -31,13 +31,13 @@ For most use cases, the following command should be enough:
 docker run \
     --env "USER_GID=$(id -g)" \
     --env "USER_ID=$(id -u)" \
-    --interactive     \
-    --rm     \
-    --tty     \
-    --volume "${PWD}:/var/www/www/api/data" \
+    --interactive \
+    --publish-all \
+    --rm \
+    --tty \
     --volume "${PWD}/assets:/var/www/html/assets" \
-    --publish-all   \
-    ghcr.io/simplyedit/simplycode-docker:main \
+    --volume "${PWD}:/var/www/www/api/data" \
+    ghcr.io/simplyedit/simplycode-docker:main
 ```
 
 This will mount the current working directory into the docker image at the right place, and start the SimplyCode server.
