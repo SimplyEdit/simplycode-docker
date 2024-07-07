@@ -24,7 +24,6 @@ RUN a2enmod --quiet rewrite ssl headers \
     && chmod +x /entrypoint.sh \
     && ln -s /var/www/html/simplycode/js/ /var/www/html/js \
     && ln -s /var/www/www/api/data/generated.html /var/www/html/index.html \
-    && mkdir /var/www/html/data && echo '{}' > /var/www/html/data/data.json \
-    && sed --in-place --expression 's%src="/js/%src="js/%g' /var/www/html/simplycode/index.html
+    && mkdir /var/www/html/data && echo '{}' > /var/www/html/data/data.json
 
 ENTRYPOINT ["/entrypoint.sh"]
