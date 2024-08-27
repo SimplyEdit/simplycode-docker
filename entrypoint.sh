@@ -57,13 +57,25 @@ defaultCommand() {
 }
 
 entrypoint() {
-    local -r subject="${1-}"
+    local url subject
+    readonly subject="${1-}"
 
     # If the first argument is a command that exists, run it
     if [ -n "${subject}" ] && [ -n "$(command -v "${subject}" 2> /dev/null)" ]; then
         exec "${@}"
     else
         runChecks
+
+        if [ -d /var/www/html/assets ]; then
+            url="$(guessUrl)"
+            readonly url
+
+            printf "An assets folder has been found and is available at %s\nAvailable assets:\n%s\n%s\n\n" \
+                "$(tput setaf 7)${url}/assets/$(tput sgr 0)" \
+                "$(find /var/www/html/assets -maxdepth 1 -type d -exec echo -e "\t{}/" \; | sort)" \
+                "$(find /var/www/html/assets -maxdepth 1 -type f -exec echo -e "\t{}" \; | sort)"
+            fi
+
         defaultCommand "${@}"
     fi
 }
