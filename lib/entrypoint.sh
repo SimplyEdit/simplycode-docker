@@ -106,6 +106,7 @@ guessUrl(){
 
     echo "${url}"
 }
+
 runChecks() {
     local pass=true
     local url
@@ -120,9 +121,9 @@ runChecks() {
             "$(tput setaf 7)$(tput setab 2)" \
             "$(tput sgr 0)"
 
-        echo "Contents of volume /var/www/www/api/data:"
-        find /var/www/www/api/data -maxdepth 1 -type d -exec echo -e "\t{}/" \;
-        find /var/www/www/api/data -maxdepth 1 -type f -exec echo -e "\t{}" \;
+        printf "Contents of volume /var/www/www/api/data:\n%s\n%s\n\n" \
+            "$(find /var/www/www/api/data -maxdepth 1 -type d -exec echo -e "\t{}/" \; | sort)" \
+            "$(find /var/www/www/api/data -maxdepth 1 -type f -exec echo -e "\t{}" \; | sort)"
 
         url="$(guessUrl)"
         readonly url
