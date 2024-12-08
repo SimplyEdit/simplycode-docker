@@ -64,6 +64,7 @@ entrypoint() {
     if [ -n "${subject}" ] && [ -n "$(command -v "${subject}" 2> /dev/null)" ]; then
         exec "${@}"
     else
+        runSetup
         runChecks
 
         if [ -d /var/www/html/assets ]; then
@@ -105,6 +106,7 @@ guessUrl(){
 
     echo "${url}"
 }
+
 runChecks() {
     local pass=true
     local url
@@ -119,14 +121,42 @@ runChecks() {
             "$(tput setaf 7)$(tput setab 2)" \
             "$(tput sgr 0)"
 
-        echo "Contents of volume /var/www/www/api/data:"
-        find /var/www/www/api/data -maxdepth 1 -type d -exec echo -e "\t{}/" \;
-        find /var/www/www/api/data -maxdepth 1 -type f -exec echo -e "\t{}" \;
+        printf "Contents of volume /var/www/www/api/data:\n%s\n%s\n\n" \
+            "$(find /var/www/www/api/data -maxdepth 1 -type d -exec echo -e "\t{}/" \; | sort)" \
+            "$(find /var/www/www/api/data -maxdepth 1 -type f -exec echo -e "\t{}" \; | sort)"
 
         url="$(guessUrl)"
         readonly url
 
         echo -e "Running on $(tput setaf 7)${url}$(tput sgr 0)\n"
+    fi
+}
+
+runSetup() {
+    if [ ! -f /var/www/html/index.html ]; then
+        printf '%sFirst initialisation. Running setup...%s\n' \
+            "$(tput setaf 7)$(tput setab 6)" \
+            "$(tput sgr 0)"
+
+        (
+            PS4="$(echo -e "    ")"
+            set -x
+            ln -s /var/www/html/simplycode/js/ /var/www/html/js
+            ln -s /var/www/www/api/data/generated.html /var/www/html/index.html
+            ln -s /var/www/www/api/data/generated.html /var/www/html/index.js
+
+            mkdir -p /var/www/html/simply/ \
+                && ln -s /var/www/html/simplycode/simply/databind.js /var/www/html/simply/databind.js
+
+            mv /var/www/lib/000-default.conf /etc/apache2/sites-available/000-default.conf
+            mv /var/www/lib/403.php /var/www/html/403.php
+            mv /var/www/lib/server.key /etc/ssl/private/ssl-cert-snakeoil.key
+            mv /var/www/lib/server.pem /etc/ssl/certs/ssl-cert-snakeoil.pem
+        )
+
+        printf '%sSetup complete%s\n\n' \
+            "$(tput setaf 7)$(tput setab 6)" \
+            "$(tput sgr 0)"
     fi
 }
 

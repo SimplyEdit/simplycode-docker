@@ -1,0 +1,9 @@
+RewriteEngine on
+<Limit POST PUT DELETE>
+	RewriteCond %{QUERY_STRING} _method=(GET|PUT|DELETE)
+	RewriteRule ^(.*)$ index.php [L]
+</Limit>
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule .* index.php [L]
