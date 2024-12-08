@@ -23,4 +23,4 @@ RUN a2enmod --quiet rewrite ssl headers \
     && mv /var/www/lib/server.pem /etc/ssl/certs/ssl-cert-snakeoil.pem \
     && chmod +x /entrypoint.sh \
 
-ENTRYPOINT ["/entrypoint.sh"]
+ENTRYPOINT ["/var/www/lib/entrypoint.sh"]
