@@ -2,8 +2,8 @@ FROM node:22.21-alpine3.21 AS builder
 
 RUN apk add --no-cache bash git \
     && mkdir /app \
-    && git -C /app/ clone 'https://github.com/SimplyEdit/simplycode-electron.git' \
-    && git -C /app/ clone 'https://github.com/SimplyEdit/simplyedit-backend.git' \
+    && git -C /app/ clone --depth=1 --branch 'v0.9.6' 'https://github.com/SimplyEdit/simplycode-electron.git' \
+    && git -C /app/ clone --depth=1 --branch 'v0.5.2' 'https://github.com/SimplyEdit/simplyedit-backend.git' \
     && npm --prefix /app/simplycode-electron install
 
 FROM php:7.4-apache
