@@ -1,4 +1,4 @@
-FROM node:22.12-alpine AS builder
+FROM node:22.21-alpine3.21 AS builder
 
 RUN apk add --no-cache bash git \
     && mkdir /app \
