@@ -148,10 +148,10 @@ runSetup() {
             mkdir -p /var/www/html/simply/ \
                 && ln -s /var/www/html/simplycode/simply/databind.js /var/www/html/simply/databind.js
 
-            mv /var/www/lib/000-default.conf /etc/apache2/sites-available/000-default.conf
-            mv /var/www/lib/403.php /var/www/html/403.php
-            mv /var/www/lib/server.key /etc/ssl/private/ssl-cert-snakeoil.key
-            mv /var/www/lib/server.pem /etc/ssl/certs/ssl-cert-snakeoil.pem
+            cp /var/www/lib/000-default.conf /etc/apache2/sites-available/000-default.conf
+            cp /var/www/lib/403.php /var/www/html/403.php
+            cp /var/www/lib/server.key /etc/ssl/private/ssl-cert-snakeoil.key
+            cp /var/www/lib/server.pem /etc/ssl/certs/ssl-cert-snakeoil.pem
         )
 
         printf '%sSetup complete%s\n\n' \
